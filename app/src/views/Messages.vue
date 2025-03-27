@@ -45,6 +45,11 @@
             </ion-avatar>
             <!-- 簡介文字 -->
             <p>我是黃杬霆，過去曾為黑色金屬樂團吉他手、瑜伽老師、dancer等，現為公務人員及博士生，請多指教！</p>
+            <p>是否常因不會寫程式感到不適？本網站AI功能為透過生成式AI（使用chatpgt 4o-mini）產生程式碼，以下為使用說明：</p>
+            <p>1. 先註冊帳號並登入。</p>
+            <p>2. 點選左小角ICON，呼叫AI程式小助手。</p>
+            <p>3. 於文字列中描述想產生的需求程式，滑鼠點選「送出」。</p>
+            <p>4. AI程式小助手回應程式碼。</p>
 
             <!-- 新增留言區塊（僅登入使用者可見） -->
             <ion-card>
@@ -146,7 +151,7 @@
                     }
                 ]" />
             <!-- Floating Chat Button in bottom-right corner -->
-            <ion-fab v-if="isLogin()" vertical="bottom" horizontal="start" slot="fixed">
+            <ion-fab vertical="bottom" horizontal="start" slot="fixed">
                 <ion-fab-button @click="showChatModal = true">
                     <ion-icon :icon="chatbubblesOutline"></ion-icon>
                 </ion-fab-button>
@@ -183,7 +188,6 @@ import {
     IonBadge,
     IonModal,
     IonImg,
-    IonPopover,
     IonFab,
     IonFabButton,
     IonCard,
@@ -200,6 +204,7 @@ import { trash, logOutOutline, logInOutline, chatbubblesOutline, peopleOutline} 
 import api from '@/services/api.js';
 import ChatBox from '@/components/ChatBox.vue'; // The second view described below
 import { useAttrs } from 'vue';
+import unknownImgUrl from "@/assets/images/unknown.jpeg?url";
 
 const attrs = useAttrs();
 
@@ -303,7 +308,12 @@ function handleLogout() {
 }
 
 function avatarUrl() {
-    return localStorage.getItem('avatar_url')|| '';
+    const url = unknownImgUrl;
+    if(isLogin()) {
+        return localStorage.getItem('avatar_url') || url;
+    }else{
+        return url;
+    }
 }
 
 onMounted(() => {

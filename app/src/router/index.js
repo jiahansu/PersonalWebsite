@@ -3,8 +3,6 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Messages from '../views/Messages.vue';
-import Profile from '../views/Profile.vue';
-import AI from '../views/AI.vue';
 import api from '@/services/api.js';
 import UserList from '../views/UserList.vue';
 
@@ -13,8 +11,6 @@ const routes = [
   { path: '/login', component: Login},
   { path: '/register', component: Register },
   { path: '/messages', component: Messages, meta: { requiresAuth: true }  },
-  { path: '/profile', component: Profile },
-  { path: '/ai', component: AI },
   { path: '/users', component: UserList },
   // 捕捉未定義路徑，導向自介頁面或登入頁面
   { path: '/:pathMatch(.*)*', redirect: '/profile' }

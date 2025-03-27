@@ -4,6 +4,9 @@
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>登入</ion-title>
+          <ion-button slot="start"  @click="goHome">
+            <ion-icon :icon="home"></ion-icon>
+          </ion-button>
         </ion-toolbar>
       </ion-header>
   
@@ -41,6 +44,7 @@
     IonItem, IonLabel, IonInput, IonButton, IonText 
   } from '@ionic/vue';
   import api from '@/services/api.js';
+  import { home } from 'ionicons/icons';
   
   export default defineComponent({
     name: 'LoginPage',
@@ -56,6 +60,9 @@
       };
     },
     methods: {
+        goHome() {
+            router.push('/');
+        },
       async handleLogin() {
         this.errorMessage = '';
         if (!this.username || !this.password) {

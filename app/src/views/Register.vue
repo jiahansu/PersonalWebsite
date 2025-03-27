@@ -4,6 +4,9 @@
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>註冊</ion-title>
+          <ion-button slot="start"  @click="goHome">
+            <ion-icon :icon="home"></ion-icon>
+          </ion-button>
         </ion-toolbar>
       </ion-header>
   
@@ -73,6 +76,7 @@
     IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
     IonList, IonItem, IonLabel, IonInput, IonButton, IonText
   } from '@ionic/vue';
+  import { home } from 'ionicons/icons';
   
   import api from '@/services/api.js';
   
@@ -104,6 +108,9 @@
           this.previewUrl = '';
         }
       },
+      goHome() {
+            router.push('/');
+        },
   
       async handleRegister() {
         this.errorMessage = '';
