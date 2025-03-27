@@ -335,7 +335,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--port',
                         type=int,
-                        default=8080)
+                        default=8081)
     args = parser.parse_args()
     # 启动服务器
     uvicorn.run(app, host='0.0.0.0', port=args.port)
