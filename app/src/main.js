@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import App from './App.vue'
 import router from './router';
 
@@ -37,6 +37,8 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
+
+app.provide('dialogHistory', ref([]));
 
 router.isReady().then(() => {
   app.mount('#app');

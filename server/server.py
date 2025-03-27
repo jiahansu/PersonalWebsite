@@ -14,10 +14,34 @@ import logging
 from openai import OpenAI
 from fastapi.requests import Request
 
-client = OpenAI(
-    # This is the default and can be omitted
-    api_key="",
-)
+
+#Parse secreat key from secret_key.json
+import json
+
+def load_secrets(json_path='secret_keys.json'):
+    """
+    Loads OpenAI and reCAPTCHA secret keys from a JSON file.
+    Expects a structure like:
+    {
+      "openai_key": "<OPENAI_API_KEY>",
+      "recaptcha_key": "<RECAPTCHA_SECRET_KEY>"
+    }
+    """
+    with open(json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    openai_key = data.get('openai_key')
+    recaptcha_key = data.get('recaptcha_key')
+
+    # Optional validation if keys are required
+    if not openai_key or not recaptcha_key:
+        raise ValueError("Missing 'openai_key' or 'recaptcha_key' in JSON.")
+
+    return openai_key, recaptcha_key
+
+
+
+client = None
 
 # ★ 1) 改為使用 SQLite 的連線字串，指定資料庫檔名 (例如: my_database.db)
 #    sqlite:/// 開頭代表使用 SQLite；後面則是檔案路徑。
@@ -167,7 +191,7 @@ app.mount("/avatars", StaticFiles(directory=AVATAR_DIR), name="avatars")
 
 def verifyRecaptcha(recaptcha_token: str):
     # 2) Verify with Google
-    secret_key = "6Ldj9fgqAAAAAMVUnJQNelKvjTkZyGP5p8Zo4lSR"
+    secret_key = recaptcha_secret_key 
     verify_url = "https://www.google.com/recaptcha/api/siteverify"
     payload = {
         'secret': secret_key,
@@ -336,7 +360,15 @@ def main():
     parser.add_argument('--port',
                         type=int,
                         default=8081)
+    parser.add_argument('--secret_file',
+                        type=str,
+                        default='secret_keys.json')
     args = parser.parse_args()
+    openai_key, recaptcha_key = load_secrets(args.secret_file)
+    global client
+    global recaptcha_secret_key
+    recaptcha_secret_key = recaptcha_key
+    client = OpenAI(api_key=openai_key)
     # 启动服务器
     uvicorn.run(app, host='0.0.0.0', port=args.port)
 

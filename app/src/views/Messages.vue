@@ -59,7 +59,7 @@
                             <!-- If logged in, show user avatar that opens a popover -->
                             <ion-avatar id="avatarIcon" class="avatar-top-right" style="cursor: pointer;">
                                 <!-- If user has an avatar, display it; otherwise, fallback to an icon -->
-                                <ion-img v-if="userAvatar" :src="userAvatar" />
+                                <ion-img v-if="isLogin()" :src="avatarUrl()" />
                             </ion-avatar>
                             <!-- <ion-button @click="handleLogout" fill="clear" color="secondary">
                                     <ion-icon :icon="logOutIcon" slot="start"></ion-icon>
@@ -155,7 +155,7 @@
             <!-- Modal for the ChatBox -->
             <ion-modal :is-open="showChatModal" swipe-to-close="true" presenting-element="ion-router-outlet"
                 @will-dismiss="onModalWillDismiss">
-                <ChatBox @closed="onModalWillDismiss" :userAvatar="userAvatar" />
+                <ChatBox @closed="onModalWillDismiss" :userAvatar="avatarUrl()" />
             </ion-modal>
         </ion-content>
     </ion-page>
@@ -220,8 +220,6 @@ const currentUser = ref('');
 
 const alertOpen = ref(false);
 const alertMessage = ref('');
-
-const userAvatar = ref('');
 // Deletion confirmation
 const deleteAlertOpen = ref(false);
 let messageIdToDelete = null; // Not a ref if we only update in handlers
@@ -300,24 +298,24 @@ function goUsers() {
 function handleLogout() {
     api.logout();
     //In.value = false;
-    userAvatar.value = '';
     currentUser.value = '';
     router.push('/login');
 }
 
-/* -----------------------------
-   onMounted Lifecycle
---------------------------------*/
+function avatarUrl() {
+    return localStorage.getItem('avatar_url')|| '';
+}
+
 onMounted(() => {
     const username = localStorage.getItem('username');
     const avatarUrl = localStorage.getItem('avatar_url');
 
     //loggedIn.value = api.isAuthorized();
     currentUser.value = username || '';
-    userAvatar.value = avatarUrl || '';
 
     fetchMessages();
 });
+
 </script>
 
 <style scoped>

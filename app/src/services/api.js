@@ -1,7 +1,17 @@
 import axios from 'axios';
 
-const BaseUrl = 'http://localhost:8080';
+const BasePort = '8081';
+let BaseUrl;
 const ReCapptchaSiteKey = '6Ldj9fgqAAAAAE-Lmp1iCjuKMQYFEcwVnZtFArIY';
+
+//Get base URL from browser' URL
+const url = new URL(window.location.href);
+if (url.hostname === 'localhost') {
+    BaseUrl = `http://localhost:${BasePort}`;
+} else {
+    BaseUrl = `${url.protocol}//${url.hostname}:${BasePort}`;
+}
+
 // 設定後端 API 基本路徑 (根據實際後端位址調整)
 const API = axios.create({
     baseURL: BaseUrl  // FastAPI 伺服器位址

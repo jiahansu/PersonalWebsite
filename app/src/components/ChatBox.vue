@@ -73,6 +73,7 @@
   } from '@ionic/vue';
   import { ref, onMounted } from 'vue';
   import api from '@/services/api.js';
+  import { inject } from 'vue'
   const props = defineProps(['userAvatar']);
   const emit = defineEmits(['closed']);
   //let lastInputText = '';
@@ -82,9 +83,7 @@
     const dialogHistory = inject('dialogHistory');
   Option 2: If you want local state, just use a ref([]).
   */
-  const dialogHistory = ref([
-    // Example initial conversation
-  ]);
+  const dialogHistory  = inject('dialogHistory');
   
   const chatInput = ref(null);
   const isSendBtnDisabled = ref(false);
