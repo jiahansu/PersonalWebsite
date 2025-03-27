@@ -1,0 +1,487 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff6db;
+    display: flex;
+    flex-direction: column;
+    height: (100vh- 70vh);
+}
+
+/* Header with Logo */
+.header-logo {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #FFF6DB; /* 米白色背景 */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header-logo img {
+    width: 150px;
+}
+
+/* Introduction Section */
+.introduction {
+    background-color: #FFF6DB;
+    padding-top: 220px;
+    text-align: center;
+    height: 100%;
+}
+
+.character-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-display img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.arrow-left, .arrow-right {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.arrow-left img, .arrow-right img {
+    width: 30px;
+    height: 30px;
+}
+
+.start-chat {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 20px 30px;
+    border-radius: 5px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.terms {
+    margin-top: 150px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* Chat Box Layout */
+.chat-box {
+    background-color: #FFF6DB;
+    padding-top: 70px; /* Offset for the fixed header */
+    padding-bottom: 70px; /* Offset for the fixed input */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh; /* Full height of the viewport */
+}
+
+.messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Time Separator */
+.time-separator {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.time-separator p {
+    color: #666;
+    font-size: 12px;
+}
+
+/* Message Styles */
+.message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.message.bot {
+    justify-content: flex-start;
+}
+
+.message.user {
+    justify-content: flex-end;
+    text-align: right;
+    flex-direction: row; /* 確保使用者的頭像顯示在右邊 */
+}
+
+/* Message Content Styling */
+.message-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+}
+
+.message-content.left {
+    align-items: flex-start; /* Align left */
+}
+
+.message-content.right {
+    align-items: flex-end; /* Align right */
+}
+
+/* Avatar Styles */
+.avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px; /* 確保訊息和頭像之間有空間 */
+    margin-right: 10px;
+}
+
+.right-avatar {
+    margin-left: 10px; /* 頭像與訊息框之間的間隔 */
+}
+
+/* Text Bubble Styles */
+.bot-text, .user-text {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.user-text {
+    background-color: #f5f5f5;
+    color: #D87C04;
+    text-align: right;
+}
+
+.bot-text {
+    background-color: #b8b8b8;
+    color: #eeeeee;
+    text-align: left;
+}
+
+/* Input Box Styles */
+.input-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    padding: 10px;
+    background-color: #000;
+    border-top: 2px solid #ddd;
+    z-index: 1000;
+}
+
+.input-box input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.send-btn {
+    background-color: rgb(245, 140, 31);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .avatar-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .bot-text, .user-text {
+        font-size: 14px;
+    }
+
+    .chat-box {
+        height: 100vh; /* Full height for mobile */
+    }
+}
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff6db;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Header with Logo */
+.header-logo {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #FFF6DB; /* 米白色背景 */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header-logo img {
+    width: 150px;
+}
+
+/* Listening Section */
+.listening-section {
+    background-color: #FFF6DB;
+    padding-top: 100px;
+    text-align: center;
+    height: calc(100vh - 70px); /* Ensure full height minus the header */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-display img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.listening-status {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-buttons button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* Dynamic Audio Visualizer */
+.audio-visualizer {
+    width: 100%;
+    height: 20px;
+    background-color: #fff6db;
+    position: relative;
+    margin-top: 40px;
+}
+
+.audio-bar {
+    background-color: #FF8C00; /* 橘色 */
+    height: 100%;
+    width: 0%; /* 初始寬度為0 */
+    transition: width 0.3s ease-in-out; /* 平滑過渡效果 */
+}
+
+/* Terms and Conditions */
+.terms {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .character-display img {
+        width: 200px;
+        height: 200px;
+    }
+
+
+
+    .listening-status {
+        font-size: 16px;
+    }
+}
+
+
+
+
+
+/* Speaking Section */
+.speaking-section {
+    background-color: #FFF6DB;
+    padding-top: 100px;
+    text-align: center;
+    height: 100vh; /* Ensure full height minus the header */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Character Display with Sound Wave */
+.character-display {
+    position: relative;
+    width: 250px;
+    height: 250px;
+}
+
+.sound-wave-circle {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: pulse 2s infinite ease-in-out;
+    background: radial-gradient(circle, rgba(255,175,75,0.3) 40%, rgba(255,175,75,0.1) 70%, rgba(255,175,75,0) 100%);
+}
+
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+    }
+    70% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(0.95);
+    }
+}
+
+/* Speaking Status */
+.speaking-status {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-buttons button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.action-buttons img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Dynamic Audio Visualizer (可選) */
+.audio-visualizer {
+    width: 100%;
+    height: 20px;
+    background-color: #fff6db;
+    position: relative;
+    margin-top: 40px;
+}
+
+.audio-bar {
+    background-color: #FF8C00; /* 橘色 */
+    height: 100%;
+    width: 0%; /* 初始寬度為0 */
+    transition: width 0.3s ease-in-out; /* 平滑過渡效果 */
+}
+
+/* Terms and Conditions */
+.terms {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* Responsive Design */
+
+
+    .sound-wave-circle {
+        width: 250px;
+        height: 250px;
+    }
+
+ 
+/* Landing */
+
+
+
+/* Landing Section */
+.landing-section {
+    text-align: center;
+}
+
+/* Logo Image */
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo-img {
+    width: 200px; /* Default size for logo */
+    height: auto;
+}
+
+/* Logo Text */
+.logo-text {
+    font-size: 36px;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+/* Subtext under Logo */
+.logo-subtext {
+    font-size: 18px;
+    color: #666;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .logo-img {
+        width: 150px; /* Smaller size for mobile devices */
+    }
+
+    .logo-text {
+        font-size: 30px;
+    }
+
+    .logo-subtext {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-img {
+        width: 250px; 
+        margin-top: 200px;/* Even smaller size for small screens */
+    }
+
+    .logo-text {
+        font-size: 24px;
+    }
+
+    .logo-subtext {
+        font-size: 14px;
+    }
+}
