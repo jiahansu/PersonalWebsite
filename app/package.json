@@ -38,7 +38,7 @@
     "jsdom": "26.0.0",
     "terser": "^5.4.0",
     "typescript": "5.8.2",
-    "vite": "6.2.2",
+    "vite": "6.2.5",
     "vitest": "3.0.9",
     "vue-tsc": "3.0.0-alpha.2"
   }
