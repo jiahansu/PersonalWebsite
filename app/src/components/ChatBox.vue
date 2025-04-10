@@ -52,6 +52,7 @@
               placeholder="Say something..."
               ref="chatInput"
               @ionChange="onInputChange"
+                @keyup.enter="send"
             />
             <ion-button color="warning" @click="send" :disabled="isSendBtnDisabled"
               >送出</ion-button
