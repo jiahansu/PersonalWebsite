@@ -15,7 +15,7 @@
       <ion-content :fullscreen="true">
         <!-- Chat Box -->
         <section class="chat-box">
-          <div class="messages">
+          <div class="messages" ref="messagesRef">
             <!-- Loop through dialogHistory to display messages -->
             <div v-for="(item, idx) in dialogHistory" :key="idx">
               <div v-if="item.role !== 'system'" :class="['message', item.role==='user' ? 'user' : 'bot']">
@@ -81,6 +81,7 @@
   import {close} from 'ionicons/icons';
   const props = defineProps(['userAvatar']);
   const emit = defineEmits(['closed']);
+    const messagesRef = ref(null);
   //let lastInputText = '';
   
   /* 
@@ -117,7 +118,13 @@
     // We might store it in some local ref
     //lastInputText = e.detail.value;
   }
-  
+  function scrollToBottom() {
+    // Scroll to the bottom of the messages
+    setTimeout(() => {
+        messagesRef.value.scrollTop = messagesRef.value.scrollHeight;
+    }, 18);
+    
+  }
   // The function to handle sending messages
   async function send() {
     if (!chatInput.value) return;
@@ -128,7 +135,7 @@
   
     // Push user message
     dialogHistory.value.push({ role: 'user', content: typedValue });
-  
+    scrollToBottom();
     // Clear input
     chatInput.value.$el.value = '';
     isSendBtnDisabled.value = true;
@@ -158,6 +165,7 @@
   
       // Append AI message
       dialogHistory.value.push({ role: 'assistant', content: assistantReply });
+      scrollToBottom();
     } else {
       console.error('Error: ' + JSON.stringify(data));
     }
@@ -176,7 +184,7 @@
   .chat-box {
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    height: 100%;
     margin: 0 auto;
     max-width: 600px;
     border: 1px solid #eee;
@@ -241,7 +249,7 @@
 
 /* Input Box Styles */
 .input-box {
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;
