@@ -324,6 +324,7 @@ onMounted(() => {
     currentUser.value = username || '';
 
     fetchMessages();
+    //hideRecaptcha();
 });
 
 </script>

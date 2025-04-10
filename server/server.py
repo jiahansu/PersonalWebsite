@@ -13,10 +13,11 @@ import requests
 import logging
 from openai import OpenAI
 from fastapi.requests import Request
-
-
+from html_sanitizer import Sanitizer
 #Parse secreat key from secret_key.json
 import json
+
+sanitizer = Sanitizer()  # default configuration
 
 def load_secrets(json_path='secret_keys.json'):
     """
@@ -222,6 +223,17 @@ async def register(
 ):
     if not verifyRecaptcha(recaptchaToken):
         raise HTTPException(status_code=400, detail="偵測到異常行為，請稍後再試。")
+    if username == "" or password == "":
+        raise HTTPException(status_code=400, detail="使用者名稱或密碼不得為空。")
+    
+    sanitizedUsername = sanitizer.sanitize(username)
+    # 檢查使用者名稱是否符合規範
+    if username != sanitizedUsername:
+        raise HTTPException(status_code=400, detail="使用者名稱不得包含特殊字符。")
+    # 檢查使用者名稱長度
+    if len(username) < 3 or len(username) > 20:
+        raise HTTPException(status_code=400, detail="使用者名稱長度必須在 3 到 20 個字元之間。")
+    
     # 檢查使用者名稱是否已存在
     if db.query(User).filter(User.username == username).first():
         raise HTTPException(status_code=400, detail="該用戶名已被使用。")
@@ -248,7 +260,7 @@ async def register(
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"儲存頭貼檔案失敗: {e}")
     # 建立新 User 物件並寫入資料庫
-    new_user = User(username=username, hashed_password=hashed_pw, avatar_filename=avatar_filename, nickname=nickname)
+    new_user = User(username=username, hashed_password=hashed_pw, avatar_filename=avatar_filename, nickname=sanitizer.sanitize(nickname))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)  # 取回自動產生的 id 等欄位
@@ -300,7 +312,7 @@ def create_message(
     current_user: User = Depends(get_current_user)
 ):
     # 過濾輸入內容，防止 XSS 攻擊：轉義特殊字符
-    clean_content = html.escape(msg.content, quote=True)
+    clean_content = sanitizer.sanitize(msg.content)
     # 建立留言物件並儲存
     new_msg = Message(user_id=current_user.id, content=clean_content)
     db.add(new_msg)

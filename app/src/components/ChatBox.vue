@@ -5,7 +5,9 @@
         <ion-toolbar>
           <ion-title>AI程式小助手</ion-title>
           <ion-buttons slot="end">
-            <ion-button @click="closeModal">Close</ion-button>
+            <ion-button @click="closeModal">
+                <ion-icon :icon="close" slot="icon-only"></ion-icon>
+            </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -69,11 +71,13 @@
     IonButtons,
     IonButton,
     IonContent,
-    IonInput
+    IonInput,
+    IonIcon
   } from '@ionic/vue';
   import { ref, onMounted } from 'vue';
   import api from '@/services/api.js';
   import { inject } from 'vue'
+  import {close} from 'ionicons/icons';
   const props = defineProps(['userAvatar']);
   const emit = defineEmits(['closed']);
   //let lastInputText = '';
@@ -274,4 +278,7 @@
     flex: 1;
     margin-right: 6px;
   }
+  .grecaptcha-badge { 
+    visibility: hidden;
+}
   </style>
